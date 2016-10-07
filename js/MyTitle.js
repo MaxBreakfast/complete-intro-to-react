@@ -16,4 +16,4 @@ var MyTitle = React.createClass({
   }
 })
 
-module.exports = MyTitle;
+module.exports = MyTitle
