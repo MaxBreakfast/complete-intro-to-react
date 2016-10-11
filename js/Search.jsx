@@ -1,12 +1,15 @@
 const React = require('react')
-const data = require('../public/data')
 const ShowCard = require('./ShowCard')
+const { object } = React.PropTypes
 
 const Search = React.createClass({
   getInitialState () {
     return {
       searchTerm: ''
     }
+  },
+  propTypes: {
+    route: object
   },
   handleSearchTermEvent (event) {
     this.setState({ searchTerm: event.target.value })
@@ -20,7 +23,7 @@ const Search = React.createClass({
             placeholder='Search' onChange={this.handleSearchTermEvent} />
         </header>
         <div className='shows'>
-          {data.shows
+          {this.props.route.shows
             .filter(show =>
               `${show.title} ${show.description}`.toUpperCase()
               .indexOf(this.state.searchTerm.toUpperCase()) >= 0)
