@@ -12,13 +12,17 @@ const Search = React.createClass({
   propTypes: {
     route: object
   },
-  handleSearchTermEvent (event) {
-    this.setState({ searchTerm: event.target.value })
+  handleSearchTermChange (searchTerm) {
+    this.setState({ searchTerm })
   },
   render () {
     return (
       <div className='container'>
-        <Header />
+        <Header
+          handleSearchTermChange={this.handleSearchTermChange}
+          searchTerm={this.state.searchTerm}
+          showSearch
+          />
         <div className='shows'>
           {this.props.route.shows
             .filter(show =>
