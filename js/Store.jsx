@@ -20,3 +20,5 @@ const reduceSearchTerm = (state, action) => {
   Object.assign(newState, state, {searchTerm: action.value})
   return newState
 }
+
+const store = redux.createStore(rootReducer)
