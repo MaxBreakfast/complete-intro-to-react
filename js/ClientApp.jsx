@@ -6,7 +6,7 @@ const Search = require('./Search')
 const Layout = require('./Layout')
 const Details = require('./Details')
 
-const {Router, Route, IndexRoute, hashHistory} = require('react-router')
+const { Router, Route, IndexRoute, hashHistory } = require('react-router')
 const { shows } = require('../public/data')
 
 const App = React.createClass({
