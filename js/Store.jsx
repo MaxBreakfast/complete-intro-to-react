@@ -6,7 +6,7 @@ const initialState = {
   searchTerm: ''
 }
 
-const rootReducer = (state, action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_SEARCH_TERM:
       return reduceSearchTerm(state, action)
