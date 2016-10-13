@@ -1,34 +1,68 @@
 const React = require('react')
-
-const Landing = require('./Landing')
-const Search = require('./Search')
-const Layout = require('./Layout')
-const Details = require('./Details')
-const { store } = require('./Store')
 const { Provider } = require('react-redux')
 
-const { Router, Route, IndexRoute, browserHistory } = require('react-router')
+const Layout = require('./Layout')
 
-const myRoutes = () => (
-  <Route path='/' component={Layout}>
-    <IndexRoute component={Landing} />
-    <Route path='/search' component={Search} />
-    <Route path='/details/:id' component={Details} />
-  </Route>
-)
+const { store } = require('./Store')
+
+const { Router, browserHistory } = require('react-router')
+
+if (typeof module !== 'undefined' && module.require) {
+  if (typeof require.ensure === 'undefined') {
+    require.ensure = require('node-ensure')
+  }
+}
+
+const rootRoute = {
+  component: Layout,
+  path: '/',
+  indexRoute: {
+    getComponent (location, cb) {
+      require.ensure([], (error) => {
+        if (error) {
+          return console.error('ClientApp Landing require.ensure error', error)
+        }
+        cb(null, require('./Landing'))
+      })
+    }
+  },
+  childRoutes: [
+    {
+      path: 'search',
+      getComponent (location, cb) {
+        require.ensure([], (error) => {
+          if (error) {
+            return console.error('ClientApp Landing require.ensure error', error)
+          }
+          cb(null, require('./Search'))
+        })
+      }
+    },
+    {
+      path: 'details/:id',
+      getComponent (location, cb) {
+        require.ensure([], (error) => {
+          if (error) {
+            return console.error('ClientApp Landing require.ensure error', error)
+          }
+          cb(null, require('./Details'))
+        })
+      }
+    }
+  ]
+}
 
 const App = React.createClass({
   render () {
     return (
       <Provider store={store}>
-        <Router history={browserHistory}>
-          {myRoutes()}
-        </Router>
+        <Router routes={rootRoute} history={browserHistory} />
       </Provider>
     )
   }
 })
 
-App.Routes = myRoutes
+App.Routes = rootRoute
+App.History = browserHistory
 
 module.exports = App
